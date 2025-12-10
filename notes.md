@@ -83,3 +83,38 @@
                         JS calls a Web API.
                         Browser handles the task in the background.
                         When it finishes, callback goes to the task/microtask queue.
+
+# Event loop :-
+        The event loop is the system that decides:
+                When and in what order your JavaScript code runs.
+        Because JavaScript is single-threaded (it has only one main thread), it can’t run multiple things at the same time.
+        The event loop helps it handle async tasks without blocking.
+        The Main Parts (very important)
+                1. Call Stack - Where normal synchronous code runs.
+                2. Web APIs - Browser handles async stuff here (like setTimeout, fetch, DOM events).
+                3. Task (Callback) Queue - Where finished tasks from Web APIs wait.
+                4. Microtask Queue - For higher-priority tasks like:
+                        Promise.then
+                        queueMicrotask
+                        MutationObserver
+                5. Event Loop - Boss that keeps checking:
+                        Is Call Stack empty?
+                        If yes → push next task from queue.
+                Example to really understand
+```js
+                console.log("Start");
+                setTimeout(() => {
+                console.log("Timeout");
+                }, 0);
+
+                Promise.resolve().then(() => {
+                console.log("Promise");
+                });
+
+                console.log("End");
+```
+                Execution order:
+                Start → Call Stack
+                End → Call Stack
+                Promise → Microtask Queue (runs before timeout)
+                Timeout → Task Queue
