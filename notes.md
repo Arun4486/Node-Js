@@ -65,6 +65,7 @@
                         setInterval(() => {
                         console.log("Runs repeatedly");
                         }, 1000);
+```
                 3. Fetch API
                         Used to make network requests.
 ```js
