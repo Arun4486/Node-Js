@@ -57,7 +57,7 @@
                                 document.getElementById("box").style.color = "red";
                 2. Timers API
                         Used for scheduling code.
-                        ```js                        
+```js                        
                         setTimeout(() => {
                         console.log("Runs later");
                         }, 1000);
