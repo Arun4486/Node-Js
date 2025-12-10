@@ -83,6 +83,18 @@
                         JS calls a Web API.
                         Browser handles the task in the background.
                         When it finishes, callback goes to the task/microtask queue.
+```js
+                function checkAsync() {
+                setTimeout(() => {
+                console.log("async operation");
+                }, 3000);
+
+                console.log("sync operation");
+                }
+                checkAsync() 
+```
+                first 'sync operation' gets printed then 'async operation' gets printed, it proves that the Async operations like setTimeut() gets executed in a web API outisde the callstack, when it's calculations are done it moves to the callstack and gets executed.
+
 
 # Event loop :-
         The event loop is the system that decides:
