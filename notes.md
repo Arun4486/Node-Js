@@ -49,5 +49,36 @@
                 Use async APIs:
                 Break heavy work into chunks:
 
+# Web APIs :- 
+        browser-provided superpowers for JavaScript
+        They are not part of the JS language. They come from the browser (like Chrome, Safari, Firefox).
+        Common Web APIs
+                1. DOM API - Used to manipulate HTML and CSS.
+                                document.getElementById("box").style.color = "red";
+                2. Timers API
+                        Used for scheduling code.
+                        ```js                        
+                        setTimeout(() => {
+                        console.log("Runs later");
+                        }, 1000);
 
-
+                        setInterval(() => {
+                        console.log("Runs repeatedly");
+                        }, 1000);
+                3. Fetch API
+                        Used to make network requests.
+```js
+                        fetch("https://api.example.com/data")
+                        .then(res => res.json())
+                        .then(data => console.log(data));
+```
+                4. Storage API
+                        Used to store data in the browser.
+```js
+                        localStorage.setItem("name", "Arun");
+                        console.log(localStorage.getItem("name"));
+```
+                Flow:
+                        JS calls a Web API.
+                        Browser handles the task in the background.
+                        When it finishes, callback goes to the task/microtask queue.
