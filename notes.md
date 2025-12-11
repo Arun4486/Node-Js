@@ -536,8 +536,18 @@
                         .then(console.log)      // "Success!"
                         .catch(console.log);
                         // Failure example:
-                        Promise.any([Promise.reject(), Promise.reject()])
-                        .catch(e => console.log("All failed"));
+                        const p1 = Promise.reject("A failed");
+                        const p2 = Promise.reject("B failed");
+                        const p3 = Promise.reject("C failed");
+
+                        Promise.any([p1, p2, p3])
+                                .then(result => console.log(result))
+                                .catch(err => {
+                                        console.log("All failed");
+                                        console.log(err.errors);   // <– array of all rejections
+                                });
+                        //["A failed", "B failed", "C failed"]
+
 ```
         Quick Comparison Table
         API	                Success?	        Failure?	                When returned?
