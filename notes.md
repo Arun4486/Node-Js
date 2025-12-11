@@ -312,3 +312,72 @@
                 });
 ```
         This “pyramid shape” is callback hell.
+
+# Inversion Of Control :-
+        You give control of your function to someone else (a third-party function), and you are not in control anymore of when or how it will run.
+        This is a problem with callbacks.
+        Example:
+```js
+                function createOrder(cart, callback) {
+                        setTimeout(() => {
+                                const orderId = "123";
+                                callback(orderId);
+                        }, 2000);
+                }
+
+                createOrder(cart, function(orderId) {
+                        console.log(orderId);
+                });
+```
+                Here:
+                - You gave your callback to createOrder().
+                - You trust that createOrder will:
+                - call your callback exactly once
+                - call it with correct data
+                - not swallow errors
+                - not call it multiple times
+                - not forget to call it
+                - But you have no guarantee.
+        You lose control → that’s Inversion of Control.
+        Why is Inversion of Control bad?
+                - Because someone else decides:
+                - When your callback runs
+                - What arguments it gets
+                - Whether it runs at all
+                - Whether it runs twice
+                - Whether it throws an error you’ll never see
+        This is unsafe.
+        Promises solve both problems:
+                - Promises avoid Callback Hell
+        Instead of deep nesting:
+```js
+                task1(() => {
+                        task2(() => {
+                                task3(() => {
+                                        task4();
+                                });
+                        });
+                });
+
+                // Promises flatten it:
+                task1()
+                .then(task2)
+                .then(task3)
+                .then(task4)
+                .catch(handleError);
+```
+        Promises fix Inversion of Control
+                - Because you don’t give your callback to someone else.
+        You write:
+```js
+                createOrder(cart)
+                .then(orderId => ...)
+```
+                And you decide what happens with the result.
+                The async function only resolve() or reject() once — guaranteed by JavaScript.
+                Your .then() callback is always:
+                        - Called exactly once
+                        - Called with correct value
+                        - Safe from try/catch errors
+                        - Scheduled by the JavaScript engine
+                This returns control back to you.
