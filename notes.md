@@ -503,3 +503,21 @@
 ```
                 - No error
                 - You get complete report of all promises
+
+        3. Promise.race()
+                Returns the first promise to finish (success OR failure).
+                Whichever finishes first wins the race.
+                Example:
+```js
+                        const slow = new Promise(res => setTimeout(() => res("Slow"), 2000));
+                        const fast = new Promise(res => setTimeout(() => res("Fast"), 500));
+
+                        Promise.race([slow, fast])
+                                .then(result => console.log(result));  // "Fast"
+                // Failure example:
+                        const p1 = new Promise((_, rej) => setTimeout(() => rej("Fail"), 100));
+                        const p2 = new Promise(res => setTimeout(() => res("Success"), 500));
+
+                        Promise.race([p1, p2])
+                                .catch(console.log);  // "Fail"
+```
