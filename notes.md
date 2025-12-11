@@ -240,3 +240,55 @@
 
                 test();
 ```
+        Ex. //? handling a user cart
+```js
+                const cart = ["Shoes", "Jackets", "Tracks"];
+
+                const promise = createOrder(cart);
+                // Either use the Promise directly, Or wrap it inside a function and then call it
+                promise
+                .then((orderId) => {
+                console.log(orderId);
+                return orderId;
+                })
+                .then((orderId) => {
+                return proceedToPayment(orderId);
+                })
+                .then((paymentInfo) => {
+                console.log(paymentInfo);
+                })
+                .catch((err) => {
+                console.log(err.message);
+                })
+                .then(() => {
+                console.log(
+                "bcz I'm after the catch block, no matter what happens I will always be called."
+                );
+                });
+                // console.log(orderId); error only accessible through the function
+
+                function createOrder(cart) {
+                const pr = new Promise((resolve, reject) => {
+                if (!validateCart(cart)) {
+                const err = new Error("cart is not valid");
+                reject(err);
+                }
+                const orderId = 1234;
+                if (orderId) {
+                setTimeout(() => {
+                        resolve(orderId);
+                }, 2000);
+                }
+                });
+                return pr;
+                }
+
+                function proceedToPayment() {
+                return new Promise((resolve, reject) => {
+                resolve("Payment Successful");
+                });
+                }
+                function validateCart(cart) {
+                return true;
+                }
+```
