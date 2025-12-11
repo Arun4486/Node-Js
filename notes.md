@@ -4,10 +4,10 @@
 
 # Fucntions are first class citizens :
         you can do with functions everything that you can do with numbers, strings, or objects.
-        Stored in variables
-        Passed as an argument to another function
-        Returned from another function
-        Stored inside arrays or objects
+        - Stored in variables
+        - Passed as an argument to another function
+        - Returned from another function
+        - Stored inside arrays or objects
 
 # setTimeout() : 
         is a built-in JavaScript function that runs a function once after a specified delay.
@@ -130,3 +130,113 @@
                 End → Call Stack
                 Promise → Microtask Queue (runs before timeout)
                 Timeout → Task Queue
+
+# Lexical chaining :-
+                lexical meaning is the literal dictionary meaning of a word,
+                Scope chaining is the process where JavaScript looks for a variable in the current scope first, and if it doesn’t find it, it keeps searching in outer (parent) scopes until it reaches the global scope.
+
+# Type of functions :-
+        1. Fn statement / Declaration- 
+```js
+                function(){}
+```
+        2. Anonymous functions:-
+                there is nothing like it in js alone, 
+```js
+                function (){} it gives syntax error
+```
+                but when funcitons are used as values they may/may not have names,then it's called anonymous function
+        3. Fn Expression -  can be named / anonymous
+```js
+                var a = function(){}
+```
+                but this expression is not hoisted, bcz in variable phase the js engine doesn't know the value it's going to be assigned.
+        4. Arrow functions :-
+                ()=>{}
+
+
+# Promises :-
+        A Promise is an object that represents a value that will be available now, later, or never.
+        Promise	- A container for future value
+        It is used for handling asynchronous operations like:
+                - API calls
+                - setTimeout
+                - Reading files
+                - Database queries
+        Three States of a Promise
+                1.Pending → operation still running
+                2.Fulfilled → operation finished successfully
+                3.Rejected → operation failed
+                Pending  ────→  Fulfilled  (resolve)
+                        └───→  Rejected   (reject)
+        Creating a Promise
+```js
+                let promise = new Promise((resolve, reject) => {
+                let success = true;
+
+                if (success) {
+                resolve("Task completed!");
+                } else {
+                reject("Task failed!");
+                }
+                });
+
+                //How to use a Promise
+                //We use .then() and .catch() to get results:
+                promise
+                .then(result => {
+                console.log(result);      // "Task completed!"
+                })
+                .catch(error => {
+                console.log(error);       // if rejected
+                });
+```
+        Example with real async (setTimeout)
+```js
+                function getData() {
+                return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                resolve("Here is your data!");
+                }, 2000);
+                });
+                }
+
+                getData().then(console.log);
+                //Output after 2 seconds:
+                //Here is your data!
+```
+        Why Promises were created?
+                Before Promises, we had callback hell:
+```js
+                doSomething(function(result) {
+                doSomethingElse(result, function(newResult) {
+                        doThird(newResult, function(final) {
+                        console.log(final);
+                        });
+                });
+                });
+```
+        Promises fix this by making the code flat and readable:
+```js
+                doSomething()
+                .then(doSomethingElse)
+                .then(doThird)
+                .then(console.log);
+                🧪 Promise Chaining
+                new Promise((resolve) => {
+                resolve(1);
+                })
+                .then(num => num + 1)  // 2
+                .then(num => num + 1)  // 3
+                .then(console.log);    // prints 3
+```
+        async / await (modern way)
+        This is just cleaner syntax for using Promises.
+```js
+                async function test() {
+                let result = await getData();  // wait for promise
+                console.log(result);
+                }
+
+                test();
+```
