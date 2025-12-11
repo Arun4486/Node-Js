@@ -521,3 +521,21 @@
                         Promise.race([p1, p2])
                                 .catch(console.log);  // "Fail"
 ```
+
+        4. Promise.any()
+                - Returns the first successful promise.
+                - Ignores failures.
+                - Errors only if ALL fail.
+                Example:
+```js
+                        const p1 = Promise.reject("Err 1");
+                        const p2 = Promise.reject("Err 2");
+                        const p3 = Promise.resolve("Success!");
+
+                        Promise.any([p1, p2, p3])
+                        .then(console.log)      // "Success!"
+                        .catch(console.log);
+                        // Failure example:
+                        Promise.any([Promise.reject(), Promise.reject()])
+                        .catch(e => console.log("All failed"));
+```
