@@ -292,3 +292,23 @@
                 return true;
                 }
 ```
+
+# Callback Hell :-
+        Callback Hell happens when you have too many nested callbacks, usually because each async task depends on the previous one.
+        This makes the code:
+                - Hard to read
+                - Hard to debug
+                - Hard to maintain
+        Example of Callback Hell
+```js
+                doTask1(data => {
+                        doTask2(data, result => {
+                                doTask3(result, final => {
+                                        doTask4(final, output => {
+                                        console.log(output);
+                                        });
+                                });
+                        });
+                });
+```
+This “pyramid shape” is callback hell.
