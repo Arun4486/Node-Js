@@ -484,6 +484,13 @@
                         .then(console.log)
                         .catch(console.log);     // "Failed!"
 ```
+                        Best for:
+                                - Dashboard data
+                                - Loading product details + reviews together
+                                - Sending multiple independent API calls
+                                - Fails fast:
+                                - If even one promise rejects → entire Promise.all fails.
+
         2. Promise.allSettled()
                 Waits for all promises, even if some fail.
                 Always returns an array of results with status and value/reason.
@@ -504,6 +511,11 @@
                 - No error
                 - You get complete report of all promises
 
+                Best for:
+                        - Displaying partial results
+                        - Running analytics jobs
+                        - Uploading multiple files (some may fail)
+
         3. Promise.race()
                 Returns the first promise to finish (success OR failure).
                 Whichever finishes first wins the race.
@@ -521,7 +533,11 @@
                         Promise.race([p1, p2])
                                 .catch(console.log);  // "Fail"
 ```
-
+                Best for:
+                        - Setting API timeouts
+                        - Competing services (use whichever returns first)
+                        - UI interactions (first event wins)
+                        - If a fast promise rejects → whole race rejects immediately.
         4. Promise.any()
                 - Returns the first successful promise.
                 - Ignores failures.
@@ -549,6 +565,11 @@
                         //["A failed", "B failed", "C failed"]
 
 ```
+                Best for:
+                        - Backup APIs
+                        - Retries from multiple servers
+                        - Network fallback strategies
+                        - First fast success regardless of slow failures
         Quick Comparison Table
         API	                Success?	        Failure?	                When returned?
         ---                     --------                --------                        --------------
