@@ -484,3 +484,22 @@
                         .then(console.log)
                         .catch(console.log);     // "Failed!"
 ```
+        2. Promise.allSettled()
+                Waits for all promises, even if some fail.
+                Always returns an array of results with status and value/reason.
+                Example:
+```js
+                        const p1 = Promise.resolve(10);
+                        const p2 = Promise.reject("Error");
+                        const p3 = Promise.resolve(30);
+                        Promise.allSettled([p1, p2, p3])
+                                .then(results => console.log(results));
+                        //Output:
+                        [
+                        { status: "fulfilled", value: 10 },
+                        { status: "rejected", reason: "Error" },
+                        { status: "fulfilled", value: 30 }
+                        ]
+```
+                - No error
+                - You get complete report of all promises
