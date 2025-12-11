@@ -222,7 +222,7 @@
                 .then(doSomethingElse)
                 .then(doThird)
                 .then(console.log);
-                🧪 Promise Chaining
+                // Promise Chaining
                 new Promise((resolve) => {
                 resolve(1);
                 })
