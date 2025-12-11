@@ -1,3 +1,69 @@
+# How JS runs Asyncronously :-
+        1)Thread = an execution lane inside a CPU process. A thread runs instructions sequentially (one at a time).
+        A program/process can have one thread (single-threaded) or many threads (multi-threaded). Each thread has its own call stack and executes code independently (but shares memory with other threads in the same process).
+        JS engines (V8, SpiderMonkey, JavaScriptCore) run JavaScript on a single main thread by default. That means JS executes one step at a time on that single call stack.
+        2) So how can JS do asynchronous work if it’s single-threaded?
+                Important point: “asynchronous” ≠ “multithreaded JS code”.
+                The browser (or Node.js) provides other threads outside the JS engine — for things like network requests, timers, rendering, file I/O. JavaScript offloads tasks to those subsystems and gets notified later. The JS engine still executes the callback later on the single JS thread.
+                Here’s the pipeline, step by step:
+                - JS (call stack) asks Browser APIs to do work
+                - Example: fetch(url), setTimeout(fn, 1000), DOM events, XMLHttpRequest, reading files, etc.
+                        - These are not pure-JS; they are provided by the environment (browser or Node).
+                        - When you call them, the call returns quickly (often a Promise or registration), and the heavy work is handed off.
+                        - Browser / OS handles the heavy work on other threads
+                        - Network I/O, timers, file system, GPU rendering → handled by threads or the OS kernel.
+                        - These subsystems run in parallel (outside JS), so they don’t block the JS call stack.
+                        - When the work finishes, the result is queued for JS
+                        - The environment puts a message (a callback) into a queue: either the microtask queue (promises) or the task/callback queue (setTimeout, events).
+                        - It does not immediately run the callback. The callback waits until the JS call stack is empty.
+                        - The Event Loop moves tasks to the call stack
+                        - The event loop repeatedly: if the call stack is empty, it picks microtasks and runs them all, then picks one task from the task queue and runs it.
+                        - That picked callback runs synchronously on the JS call stack (remember: still single-threaded).
+                        - So JS achieves concurrency by cooperating with other threads and queues — offloading work and resuming when results are ready. JS itself remains single-threaded; it just schedules work.
+        3) Short code example and what actually runs where
+                console.log("A");                // runs on JS thread
+                setTimeout(() => console.log("B"), 0); // timer handled by browser timers thread
+                Promise.resolve().then(() => console.log("C")); // microtask queued
+                console.log("D");                // runs on JS thread
+                What happens:
+                - A prints.
+                - setTimeout registers a timer with the browser (offloaded).
+                - Promise.resolve().then(...) schedules a microtask.
+                - D prints. 
+                - Call stack is empty → microtasks run: C prints.
+                - Tasks (timer) run next tick → B prints.
+                Final output:
+                A
+                D
+                C
+                B
+        4) Where does the “real work” happen (network, timers, file I/O)?
+                - Networking: sockets and HTTP processing are done by the browser’s network threads / OS. The browser then notifies JS when data is ready.
+                - Timers: the timer is tracked by the browser (or libuv in Node) and when it fires the callback is queued.
+                - Rendering: layout/paint often runs on different threads (compositor, GPU).
+                - File I/O (Node): handled by background worker threads (libuv) or the OS.
+                - JS only processes the callback that the environment posts once the background thread or OS signals completion.
+        5) Web Workers (and Node worker threads) — real JS threads
+                If you need to run JS code truly concurrently, you can use:
+                Web Workers (browser) or Worker Threads (Node).
+                Each worker runs its own JS engine instance on a separate OS thread with its own event loop and call stack. Communication happens via message passing (postMessage), not shared memory by default. This is how you can do CPU-heavy work without blocking the main thread.
+        6) Now map this to your 2D/3D/4th-dimension analogy
+                The 2D plane with points = your single JS thread (your program’s main execution). Each point is a synchronous instruction or function on the call stack.
+                The object at (x,y,z) = a heavy job that the 2D point cannot do directly (because it only exists on the plane).
+                What you do: the point (JS) delegates the fetch to an external courier (Browser Web API / OS thread). You hand the courier the coordinates (the request).
+                The courier goes into the 3D world (other threads/OS) and physically fetches the object (performs network I/O, timer, disk read). You — the point on the plane — do not block waiting; you keep doing other things on the plane.
+                When the courier returns, they drop a note in a mailbox on the plane (the callback queue).
+                The plane’s event loop (a clerk) checks the mailbox only when the point is not busy (i.e., call stack empty). Then the clerk brings the note to the point, and the point executes the callback and consumes the object.
+                About the z-dimension / 4th dimension confusion: you (the 2D point) need not understand the courier’s space. You just know: “I asked; someone else will handle it; I’ll get a notification later.” The courier knows how to handle z or 4D because it’s a different system with different capabilities (network stack, kernel calls). JS’s model hides those details and gives you a simple contract: register a callback or await a promise — you’ll be notified later.
+                So: JS outsources the hard, multi-dimensional work, and re-integrates the result later on the same plane in a predictable order.
+        7) A slightly deeper bit: why Promises (microtasks) run before timers
+                Browsers give microtasks (promises) higher priority because they are considered continuations of the current job. So after the call stack empties, the event loop runs all microtasks first (so .then() runs immediately after the synchronous code finishes). Only then does it run tasks from the task queue (timers, events). That’s why promise callbacks appear before setTimeout(..., 0) callbacks.
+        8) Key takeaways (short)
+                - JavaScript engine uses a single call stack (single thread for JS code).
+                - Async work is implemented by offloading tasks to other threads or the OS (network, timers, file I/O, rendering).
+                - When offloaded work completes, the environment queues a callback for JS. The event loop schedules that callback back onto the single JS thread.
+                - You can get real JS concurrency with Web Workers (separate JS threads), but communication is message-based.
+
 # Undefined and Not defined :
         when a variable is declared but not initialized yet, and we try to access it, it returns undefined
         but when we try to access and undeclared variable, it gives refference error, bcz ther is no reference regarding this variable inside m/m.
