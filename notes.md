@@ -223,7 +223,7 @@
 
 # Promises :-
         A Promise is an object that represents a value that will be available now, later, or never.
-        Promise	- A container for future value
+        Promise	- A container for future value, first it gets settled, once settled, it can either resolve or reject.
         It is used for handling asynchronous operations like:
                 - API calls
                 - setTimeout
