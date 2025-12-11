@@ -461,3 +461,26 @@
                         - .then() Handles success
                         - .catch() Handles errors
                         - .json() Converts response → JS object
+
+# Promise APIs :-
+        1. Promise.all() -> 
+                Runs multiple promises in parallel and waits for ALL to succeed.
+                If any one fails, the whole thing fails.
+                as soon as any promise fails it fives failure for all.
+                Example:
+```js
+                        const p1 = Promise.resolve(10);
+                        const p2 = Promise.resolve(20);
+                        const p3 = Promise.resolve(30);
+
+                        Promise.all([p1, p2, p3])
+                        .then(values => console.log(values))   // [10, 20, 30]
+                        .catch(err => console.log("Error:", err));
+                        // Failure example:
+                        const p1 = Promise.resolve(10);
+                        const p2 = Promise.reject("Failed!");
+
+                        Promise.all([p1, p2])
+                        .then(console.log)
+                        .catch(console.log);     // "Failed!"
+```
