@@ -539,3 +539,16 @@
                         Promise.any([Promise.reject(), Promise.reject()])
                         .catch(e => console.log("All failed"));
 ```
+        Quick Comparison Table
+        API	                Success?	        Failure?	                When returned?
+        ---                     --------                --------                        --------------
+        Promise.all	        After all succeed	If any fail	                Waits for all
+        Promise.allSettled	Always	                Never fails	                After all finish
+        Promise.race	        First finished promise	If first finishes with error	First settled
+        Promise.any	        First success	        Only if all fail	        First successful
+
+        Easiest one-liners
+                all → "all must win"
+                allSettled → "everyone gets a report card"
+                race → "first to finish wins"
+                any → "first success wins"
