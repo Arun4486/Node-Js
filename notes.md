@@ -381,3 +381,72 @@
                         - Safe from try/catch errors
                         - Scheduled by the JavaScript engine
                 This returns control back to you.
+
+# Fetch :-
+        fetch() is a built-in JavaScript function used to make HTTP requests (API calls) in the browser.
+        It returns a Promise, so it’s asynchronous.
+        Basic Syntax
+```js
+                fetch(url)
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                        .catch(error => console.log(error));
+```
+        Example – GET Request
+```js
+                fetch("https://jsonplaceholder.typicode.com/posts/1")
+                        .then(res => res.json())
+                        .then(data => console.log(data))
+                        .catch(err => console.error(err));
+                // Output:
+                {
+                        userId: 1,
+                        id: 1,
+                        title: "...",
+                        body: "..."
+                }
+```
+        Example – POST Request
+```js
+                fetch("https://jsonplaceholder.typicode.com/posts", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({
+                                title: "New Post",
+                                body: "This is my content",
+                                userId: 1
+                        })
+                })
+                .then(res => res.json())
+                .then(data => console.log(data))
+                .catch(err => console.error(err));
+```
+        Key Points About fetch()
+                1. Returns a Promise - So you must use .then() or async/await.
+                2. Does NOT automatically throw errors - If the server returns 404 or 500, fetch does NOT go to catch.
+                        You must manually check: 
+```js
+                        if (!response.ok) {
+                                throw new Error("Request failed!");
+                        }
+                //Full Example With Error Handling
+                async function getUser() {
+                        try {
+                                const res = await fetch("https://jsonplaceholder.typicode.com/users/1");
+                                if (!res.ok) {
+                                throw new Error("Network response was not ok");
+                        }
+                                const data = await res.json();
+                                console.log(data);
+                        } catch (err) {
+                                console.log("Error:", err.message);
+                        }
+}
+                getUser();
+```
+                Summary: 
+                        - fetch() Makes an HTTP request
+                        - Returns Promise
+                        - .then() Handles success
+                        - .catch() Handles errors
+                        - .json() Converts response → JS object
