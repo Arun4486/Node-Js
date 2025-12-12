@@ -460,9 +460,38 @@
                 This returns control back to you.
 
 # Fetch :-
-        fetch() is a built-in JavaScript function used to make HTTP requests (API calls) in the browser.
-        It returns a Promise, so it’s asynchronous.
-        Basic Syntax
+        - fetch() is a built-in JavaScript function used to make HTTP requests (API calls) in the browser.
+        - fetch() always returns a Promise that resolves to a Response object.
+        - This prints a Promise, NOT the data.
+        - When it resolves, you get a Response object:
+```js
+                fetch("https://api.example.com/data")
+                .then(response => {
+                console.log(response); // Response object
+                });
+        The Response object contains:
+                - status
+                - ok
+                - headers
+                - url
+                - body (a readable stream)
+                - methods like .json(), .text(), .blob(), etc.
+        response.json() also returns a Promise.
+        When resolved, it gives you the parsed JSON data.
+        Example:
+```js
+        fetch(url)
+        .then(res => res.json())
+        .then(data => {
+        console.log(data); // Actual JSON data (object/array)
+        });
+        Important:
+                - response.json() does not give you the JSON immediately.
+                - It reads the body asynchronously because the HTTP stream is not instant.
+        Why both return Promises?
+        - fetch() returns a Promise -> Because the network request takes time.
+        - response.json() returns a Promise -> Because reading and parsing the body also takes time.
+        Basic Syntax:
 ```js
                 fetch(url)
                         .then(response => response.json())
