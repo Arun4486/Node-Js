@@ -774,21 +774,52 @@
                 In non–strict mode: -> this = window
                 In strict mode: -> this = undefined
                 Because strict mode removes “auto-binding" of this.
-                Auto Binding: JavaScript automatically assigns a value to this depending on how a function is called.
+                Auto Binding --> JavaScript automatically assigns a value to this depending on how a function is called.
                         You don’t manually set this — JS does it for you.
                         This "automatic binding" happens mostly with regular functions, not arrow functions.
-                        Where does auto-binding happen?
+                Where does auto-binding happen?
                         1. Global functions
 ```js
-                        function test() {
-                                console.log(this);
-                        }
-                        test();
+                                function test() {
+                                        console.log(this);
+                                }
+                                test();
 ```
-                        In non-strict mode →
-                        - this automatically becomes window
-                        In strict mode →
-                        - this automatically becomes undefined
+                                In non-strict mode →
+                                - this automatically becomes window
+                                In strict mode →
+                                - this automatically becomes undefined
+                        2. Object methods
+```js
+                                const obj = {
+                                        name: "Arun",
+                                        show() {
+                                                console.log(this);
+                                        }
+                                };
+                                obj.show(); 
+```
+                                Auto-binding sets this = obj
+                                Because the function is called through an object.
+                        3. Event listeners
+```js
+                                button.addEventListener("click", function () {
+                                        console.log(this);
+                                });
+```
+                                Auto-binding sets this = the DOM element.
+                When auto-binding does NOT happen
+                        1. Arrow functions
+```js
+                                const obj = {
+                                        fn: () => {
+                                                console.log(this);
+                                        }
+                                };
+                                obj.fn();
+```
+                                this is NOT bound automatically.
+                                Arrow functions skip auto-binding and inherit this from the parent scope.
         3. Inside a Method (Function inside an object)
 ```js
                 const user = {
