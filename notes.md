@@ -896,18 +896,29 @@
 ```js
                         const student = {
                                 name: "Arun",
-                                sayMyName: function () {
-                                        console.log(this.name);
+                                sayMyName: function (hometown, state) {
+                                        console.log(this.name, hometown, state);
                                 },
                         };
                         // student.sayMyName(); // Arun
                         const student2 = {
                                 name: "Katiyar",
                         };
-                        student.sayMyName.call(student2); //Katiyar, it's called function borrowing
+                        student.sayMyName.call(student2, " Sitapur", " UP"); //Katiyar, it's called function borrowing
 ```
                 apply() → same as call but takes array
-                greet.apply({ name: "Arun" });
+```js
+                        const sayMyName = function (hometown, state) {
+                                console.log(this.name, hometown, state);
+                        };
+                        const student = {
+                                name: "Arun",
+                        };
+                        const student2 = {
+                                name: "Katiyar",
+                        };      
+                        sayMyName.apply(student, [" Sitapur", " UP"]); //Arun Sitapur UP
+```
                 bind() → returns a new function with fixed this
                 const fn = greet.bind({ name: "Arun" });
                 fn();
