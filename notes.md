@@ -649,3 +649,74 @@
                 allSettled → "everyone gets a report card"
                 race → "first to finish wins"
                 any → "first success wins"
+
+# Async Await :- 
+        async:
+                When you put async before a function, "it always returns a Promise", no matter what you return inside it. If a promise is returned then it returns it as it is, if normal value is return then it wraps it inside a promise.
+                Example:
+```js
+                async function hello() {
+                        return "Hello"; // but this becomes: Promise.resolve("Hello")
+                }
+
+                hello().then(console.log); // Hello
+```
+        await:
+                await pauses the function until the Promise settles (fulfilled or rejected).
+                It can only be used inside async functions (or top-level in modules).
+                Example:
+```js
+                async function getData() {
+                        let data = await fetch("/api/data");
+                        data = await data.json();
+                        console.log(data);
+                }
+```
+        Async/Await are used to handle promises
+        This avoids chaining .then().
+        How async/await works in the event loop
+                - await pauses only the async function, not the entire program.
+                - The paused part is moved to the microtask queue.
+                - So other JS code continues running.
+        Example: async/await vs promises
+        Using Promises:
+```js
+                fetchUser()
+                        .then(user => fetchOrders(user))
+                        .then(orders => console.log(orders))
+                        .catch(err => console.error(err));
+```
+        Using async/await:
+```js
+                async function showOrders() {
+                        try {
+                                const user = await fetchUser();
+                                const orders = await fetchOrders(user);
+                                console.log(orders);
+                        } catch (e) {
+                                console.error(e);
+                        }
+                }
+```
+        - Cleaner, easier to read.
+        - Error handling with async/await
+        Use try.. catch:
+```js
+                async function test() {
+                        try {
+                                const data = await fetch("wrong-url");
+                        } catch (error) {
+                                console.log("Error occurred:", error);
+                        }
+                }
+```
+        If you forget try...catch, the async function returns a rejected promise.
+        Awaiting non-promises
+        If you do:
+                await 5;
+                It becomes Promise.resolve(5) automatically.
+                JS converts non-promises to promises.
+        - async ->      Declares a function that returns a Promise
+        - await ->	Pauses execution until a Promise resolves
+        - try/catch ->	Used with async/await for errors
+        - Promise.all ->Runs things in parallel with await
