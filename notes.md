@@ -904,7 +904,7 @@
                         const student2 = {
                                 name: "Katiyar",
                         };
-                        student.sayMyName.call(student2); //Katiyar
+                        student.sayMyName.call(student2); //Katiyar, it's called function borrowing
 ```
                 apply() → same as call but takes array
                 greet.apply({ name: "Arun" });
