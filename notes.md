@@ -892,7 +892,7 @@
                 console.log(this.name);
                 }
 ```
-                greet.call({ name: "Arun" }); // Arun
+                greet.call({ name: "Arun" }); // Arun , here we can access a function inside an obj and use it for any other value or for another object
                 apply() → same as call but takes array
                 greet.apply({ name: "Arun" });
                 bind() → returns a new function with fixed this
