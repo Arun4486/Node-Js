@@ -469,6 +469,7 @@
                 .then(response => {
                 console.log(response); // Response object
                 });
+```
         The Response object contains:
                 - status
                 - ok
@@ -485,7 +486,8 @@
         .then(data => {
         console.log(data); // Actual JSON data (object/array)
         });
-        Important:
+```
+        // Important:
                 - response.json() does not give you the JSON immediately.
                 - It reads the body asynchronously because the HTTP stream is not instant.
         Why both return Promises?
