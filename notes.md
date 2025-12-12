@@ -946,3 +946,29 @@
         - Event listener (normal function) -->	element
         - Event listener (arrow) -->	lexical this
         - call/apply/bind -->	explicitly set by you
+
+# Git:-
+        A social network + storage + collaboration tool for developers.
+        You use Git on your computer, and GitHub is where you host your repositories.
+        What GitHub Provides
+                -  Remote storage for your code --> Instead of keeping your Git repo only on your computer, GitHub stores it online.
+                - Version history (using Git) --> Every commit you make is saved and viewable.
+                - Collaboration --> You and your teammates can work on the same project without overwriting each other.
+                - Open-source contributions --> Millions of projects are open-source on GitHub
+                - You can view, fork, clone, contribute.
+        Git vs GitHub:
+        Git	                                GitHub
+        ---                                     ------
+        A tool installed on your computer	A website that hosts Git repositories
+        Manages versions locally	        Stores them in the cloud
+        Works offline	                        Requires internet
+        Command-line tool	                Web UI + tools for collaboration
+        Key GitHub Terms
+        1.Repository --> Project folder stored online.
+        2.Clone --> Download a GitHub repo to your computer
+        3.Push & Pull --> push → send local commits to GitHub
+                                pull → get updates from GitHub
+        4.Branches --> Separate development lines.
+        5.Pull Requests (PRs) --> A request to merge changes from one branch to another.
+        6.Issues --> Bug reports, tasks, improvements… like a task manager.
+        7.Fork --> Copy someone else’s repo to your GitHub to modify it.

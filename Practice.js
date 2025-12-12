@@ -343,3 +343,4 @@ const btn = document.getElementById("clickMe");
 btn.addEventListener("click", () => {
   alert(this); //[object Window]
 });
+
