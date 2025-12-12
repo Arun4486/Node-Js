@@ -893,6 +893,19 @@
                 }
 ```
                 greet.call({ name: "Arun" }); // Arun , here we can access a function inside an obj and use it for any other value or for another object
+```js
+                        const student = {
+                                name: "Arun",
+                                sayMyName: function () {
+                                        console.log(this.name);
+                                },
+                        };
+                        // student.sayMyName(); // Arun
+                        const student2 = {
+                                name: "Katiyar",
+                        };
+                        student.sayMyName.call(student2); //Katiyar
+```
                 apply() → same as call but takes array
                 greet.apply({ name: "Arun" });
                 bind() → returns a new function with fixed this
