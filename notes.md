@@ -675,7 +675,7 @@
         Async/Await are used to handle promises
         This avoids chaining .then().
         The normal logs inmside an async function outputs instantly, but if there is anything after await statement then it comes after the promise is resolved.
-        All the results(after an await statement) of an async function gets logged only when all the promises get settled. 
+        The output of more then two prmoises in async function comes sequencially iun order of the await statements, if first takes more time then 2nd then both comes together after the 1st timer finishes. but of the first promise's timer finishes first then it gets returned and then the second one.
         How async/await works in the event loop
                 - await pauses only the async function, not the entire program.
                 - The paused part is moved to the microtask queue.
