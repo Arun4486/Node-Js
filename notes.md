@@ -487,7 +487,7 @@
         console.log(data); // Actual JSON data (object/array)
         });
 ```
-        // Important:
+        Important:
                 - response.json() does not give you the JSON immediately.
                 - It reads the body asynchronously because the HTTP stream is not instant.
         Why both return Promises?
@@ -753,3 +753,128 @@
         - await ->	Pauses execution until a Promise resolves
         - try/catch ->	Used with async/await for errors
         - Promise.all ->Runs things in parallel with await
+
+# This keyword:-
+        this is NOT a variable.
+        It is a context — decided based on how a function is called (not where it is written).
+        1. Global Scope
+                In Browser:
+                        console.log(this); 
+                        Output: window
+                        So in global scope → this = window
+                In Node.js:
+                        this = {} (module.exports)
+        2. Inside a Regular Function
+```js
+                function test() {
+                        console.log(this);
+                }
+                test();
+```
+                In non–strict mode: -> this = window
+                In strict mode: -> this = undefined
+                Because strict mode removes “auto-binding" of this.
+                Auto Binding: JavaScript automatically assigns a value to this depending on how a function is called.
+                        You don’t manually set this — JS does it for you.
+                        This "automatic binding" happens mostly with regular functions, not arrow functions.
+                        Where does auto-binding happen?
+                        1. Global functions
+```js
+                        function test() {
+                                console.log(this);
+                        }
+                        test();
+```
+                        In non-strict mode →
+                        - this automatically becomes window
+                        In strict mode →
+                        - this automatically becomes undefined
+        3. Inside a Method (Function inside an object)
+```js
+                const user = {
+                        name: "Arun",
+                        getName() {
+                        console.log(this);
+                        }
+                };
+                user.getName();
+```
+                this = user object
+                Because the function is called through the object.
+                But careful: assigning method to variable changes this
+        4. Inside a Constructor Function
+```js
+                function Person(name) {
+                        this.name = name;
+                }
+                const p = new Person("Arun");
+                // this = the new object being created
+```
+        5. Inside a Class
+                Under the hood classes use constructor functions.
+```js
+                class Car {
+                        constructor(model) {
+                        this.model = model;
+                        }
+                }
+```
+                this = the instance of the class
+        6. Arrow Functions – VERY IMPORTANT
+                Arrow functions do NOT have their own this.
+                They take this from their outer (lexical) scope.
+```js
+                const obj = {
+                        name: "Arun",
+                        fn: () => {
+                                console.log(this);
+                        }
+                };
+                obj.fn();
+```
+                Output: window, NOT obj.
+                Why?
+                Because arrow functions do not bind this → they use the parent scope’s this.
+                When arrow functions should not be used:
+                - In object methods
+                - In event listeners (sometimes)
+                - In constructors (they can’t be used)
+        7. Inside Event Listeners
+```js
+                button.addEventListener("click", function() {
+                        console.log(this);
+                });
+```
+                this = the DOM element that received the event.
+                But with an arrow function:
+```js
+                button.addEventListener("click", () => {
+                console.log(this);
+                });
+```
+                this is NOT the button
+                this comes from the outer scope (usually window)
+        8. Using call(), apply(), bind()
+                call() → call function and set this
+```js
+                function greet() {
+                console.log(this.name);
+                }
+```
+                greet.call({ name: "Arun" }); // Arun
+                apply() → same as call but takes array
+                greet.apply({ name: "Arun" });
+                bind() → returns a new function with fixed this
+                const fn = greet.bind({ name: "Arun" });
+                fn();
+        Master Table of this Behavior
+        Context	Value of this
+        - Global scope --> window
+        - Function (normal) -->	window / undefined (strict mode)
+        - Method of object -->	object itself
+        - Constructor --> new instance
+        - Class --> new instance
+        - Arrow function -->	from parent scope (lexical)
+        - Event listener (normal function) -->	element
+        - Event listener (arrow) -->	lexical this
+        - call/apply/bind -->	explicitly set by you
