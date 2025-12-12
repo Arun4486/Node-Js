@@ -883,6 +883,7 @@
                 console.log(this);
                 });
 ```
+                [object Window] is returned
                 this is NOT the button
                 this comes from the outer scope (usually window)
         8. Using call(), apply(), bind()
