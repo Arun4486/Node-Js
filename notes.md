@@ -920,8 +920,20 @@
                         sayMyName.apply(student, [" Sitapur", " UP"]); //Arun Sitapur UP
 ```
                 bind() → returns a new function with fixed this
-                const fn = greet.bind({ name: "Arun" });
-                fn();
+```js
+                        const sayMyName = function (hometown, state) {
+                                console.log(this.name, hometown, state);
+                        };
+                        const student = {
+                                name: "Arun",
+                        };
+
+                        const student2 = {
+                                name: "Katiyar",
+                        };
+                        const printDetails = sayMyName.bind(student, [" Sitapur", " UP"]);
+                        printDetails(); //Arun [ ' Sitapur', ' UP' ] undefined
+```
         Master Table of this Behavior
         Context	Value of this
         - Global scope --> window
