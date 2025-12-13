@@ -1019,7 +1019,7 @@
                 1.3 - document.getElementsByTagName()
                 1.4 - document.getElementsByName()
         2. Modern CSS Selector-Based APIs (Most Used)
-                2.1 - document.querySelector()
+                2.1 - document.querySelector() --> returns the first type
                 2.2 - document.querySelectorAll()
         3. Node-based Selectors (Tree Navigation)
                 3.1 - document.children
@@ -1116,3 +1116,7 @@
                 Full array methods
                 No live side effects
 
+
+        .innerText --> shows the text that is visible on the UI (some content may be hidden by css)
+        .textContent --> returns actual content written in the html doc
+        .innerHTML --> gives everything inside an element (including html elements)
