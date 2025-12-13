@@ -120,7 +120,7 @@
         They are not part of the JS language. They come from the browser (like Chrome, Safari, Firefox).
         Common Web APIs
                 1. DOM API - Used to manipulate HTML and CSS.
-                                document.getElementById("box").style.color = "red";
+                                - document.getElementById("box").style.color = "red";
                 2. Timers API
                         Used for scheduling code.
 ```js                        
@@ -1011,19 +1011,19 @@
                 - Browser extensions
 
 # Document Selectors :-
-        Document selectors are methods on document (and elements) that allow you to find nodes/elements in the DOM.
+        Document selectors are methods on - document (and elements) that allow you to find nodes/elements in the DOM.
         1.Classic (Legacy) DOM Selectors
                 - These existed before CSS selectors were standardized in JS.
-                1.1 document.getElementById()
-                1.2 document.getElementsByClassName()
-                1.3 document.getElementsByTagName()
-                1.4 document.getElementsByName()
+                1.1 - document.getElementById()
+                1.2 - document.getElementsByClassName()
+                1.3 - document.getElementsByTagName()
+                1.4 - document.getElementsByName()
         2. Modern CSS Selector-Based APIs (Most Used)
-                2.1 document.querySelector()
-                2.2 document.querySelectorAll()
+                2.1 - document.querySelector()
+                2.2 - document.querySelectorAll()
         3. Node-based Selectors (Tree Navigation)
-                3.1 document.children
-                3.2 document.childNodes
+                3.1 - document.children
+                3.2 - document.childNodes
                 3.3 Element-level traversal
                         - element.parentNode
                         - element.children
@@ -1031,4 +1031,88 @@
                         - element.lastElementChild
                         - element.nextElementSibling
                         - element.previousElementSibling
+
+# HTML Collection / NodeList (Impure Array) :-
+        Node
+         └── Element
+              └── HTMLElement
+                   └── HTMLDivElement
+
+        HTMLCollection:
+                - Returned by DOM methods that work specifically with HTML elements:
+                - document.getElementsByTagName('div')
+                - document.getElementsByClassName('card')
+                - document.forms
+                - document.images
+                it contains :
+                        Only HTML elements (no text nodes, comments, etc.)
+                Characteristics:
+                        - Indexed access: collection[0]
+                        - Has length
+                        - Not a real array
+                        - No array methods like map, filter, forEach (in older specs)
+                        - LIVE collection
+                It auto-updates when the DOM changes.
+```js
+                        const divs = document.getElementsByTagName('div');
+
+                        console.log(divs.length); // 3
+
+                        document.body.appendChild(document.createElement('div'));
+
+                        console.log(divs.length); // 4 (updated automatically)
+```
+        NodeList
+                - Returned by methods that work with nodes (not just elements):
+                        document.querySelectorAll('.card')
+                        document.childNodes
+                        element.childNodes
+                What it contains:
+                        - Elements
+                        - Text nodes
+                        - Comment nodes
+                Characteristics:
+                        - Indexed access
+                        - Has length
+                        - forEach() exists (modern browsers)
+                        - No map, filter, reduce
+                        - Can be LIVE or STATIC
+        Why are they called “Impure Arrays”?
+        Reason 1: They are NOT real arrays
+                They:
+                - - Don’t inherit from Array.prototype
+                - - Don’t support array methods (map, filter, etc.)
+                - - const divs = document.getElementsByTagName('div');
+                - - Array.isArray(divs); // false
+        So they look like arrays but don’t behave like one → impure.
+        Reason 2: LIVE behavior breaks predictability
+                Especially for HTMLCollection and live NodeLists:
+```js
+                const items = document.getElementsByClassName('item');
+
+                for (let i = 0; i < items.length; i++) {
+                items[i].remove();
+                }
+```
+                This may skip elements because:
+                        - Removing an element changes items.length
+                        - Indexes shift while looping
+                        - This violates a key expectation of arrays: --> “Data doesn’t change unless I change it explicitly.”
+                        Hence → impure.
+        Pure arrays are:
+                - Independent data structures
+                - Stable snapshots of values
+                - DOM collections are views, not values.
+        converting to Array is a best practice:
+                To get purity + predictability:
+```js
+                const divsArray = Array.from(document.getElementsByTagName('div'));
+                or
+                const divsArray = [...document.querySelectorAll('div')];
+```
+        Array → “frozen snapshot of data”
+                Real array
+                Stable data
+                Full array methods
+                No live side effects
 
