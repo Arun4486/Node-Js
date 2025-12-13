@@ -972,3 +972,40 @@
         5.Pull Requests (PRs) --> A request to merge changes from one branch to another.
         6.Issues --> Bug reports, tasks, improvements… like a task manager.
         7.Fork --> Copy someone else’s repo to your GitHub to modify it.
+
+
+# DOM Manipulation:-
+        DOM manipulation:
+                Using JavaScript to select, change, add, or remove nodes in the DOM.
+                It allows:
+                        - Updating UI
+                        - Responding to user actions
+                        - Dynamic content rendering
+                Core Areas of DOM Manipulation
+                        A. Selecting Elements (Entry Point)
+                        B. Reading & Changing Content
+                        C. Manipulating Attributes
+                        D. Manipulating Styles
+                        E. Creating & Inserting Elements
+                        F. Removing Elements
+                        G. Event Handling (DOM Interaction)
+        DOM Traversal (Navigation)
+                - element.parentElement
+                - element.children
+                - element.firstElementChild
+                - element.nextElementSibling
+        Performance & Reflow (Very Important)
+                DOM is slow because:
+                        - Changes cause reflow (layout recalculation)
+                        - Followed by repaint
+                        - Bad (multiple reflows)
+        DOM Manipulation vs Frameworks (React Context)
+        Vanilla DOM	                React
+        Direct DOM mutation	        Virtual DOM
+        Manual updates	                Declarative
+        Easy for small tasks	        Scales better
+        React still uses the DOM under the hood, but controls it.
+        When to Use DOM Manipulation Directly
+                - Simple UI updates
+                - Small scripts
+                - Browser extensions
