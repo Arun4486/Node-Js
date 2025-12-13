@@ -807,7 +807,7 @@
                                         console.log(this);
                                 });
 ```
-                                Auto-binding sets this = the DOM element.
+                                Auto-binding sets this = the DOM - element.
                 When auto-binding does NOT happen
                         1. Arrow functions
 ```js
@@ -876,7 +876,7 @@
                         console.log(this);
                 });
 ```
-                this = the DOM element that received the event.
+                this = the DOM - element that received the event.
                 But with an arrow function:
 ```js
                 button.addEventListener("click", () => {
@@ -943,7 +943,7 @@
         - Constructor --> new instance
         - Class --> new instance
         - Arrow function -->	from parent scope (lexical)
-        - Event listener (normal function) -->	element
+        - Event listener (normal function) -->	- element
         - Event listener (arrow) -->	lexical this
         - call/apply/bind -->	explicitly set by you
 
@@ -990,10 +990,10 @@
                         F. Removing Elements
                         G. Event Handling (DOM Interaction)
         DOM Traversal (Navigation)
-                - element.parentElement
-                - element.children
-                - element.firstElementChild
-                - element.nextElementSibling
+                - - element.parentElement
+                - - element.children
+                - - element.firstElementChild
+                - - element.nextElementSibling
         Performance & Reflow (Very Important)
                 DOM is slow because:
                         - Changes cause reflow (layout recalculation)
@@ -1009,3 +1009,26 @@
                 - Simple UI updates
                 - Small scripts
                 - Browser extensions
+
+# Document Selectors :-
+        Document selectors are methods on document (and elements) that allow you to find nodes/elements in the DOM.
+        1.Classic (Legacy) DOM Selectors
+                - These existed before CSS selectors were standardized in JS.
+                1.1 document.getElementById()
+                1.2 document.getElementsByClassName()
+                1.3 document.getElementsByTagName()
+                1.4 document.getElementsByName()
+        2. Modern CSS Selector-Based APIs (Most Used)
+                2.1 document.querySelector()
+                2.2 document.querySelectorAll()
+        3. Node-based Selectors (Tree Navigation)
+                3.1 document.children
+                3.2 document.childNodes
+                3.3 Element-level traversal
+                        - element.parentNode
+                        - element.children
+                        - element.firstElementChild
+                        - element.lastElementChild
+                        - element.nextElementSibling
+                        - element.previousElementSibling
+
