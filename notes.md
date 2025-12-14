@@ -559,6 +559,88 @@
                         - .catch() Handles errors
                         - .json() Converts response → JS object
 
+# Fetch Operations :-
+        1. GET — Read data
+                - Fetches data from server
+                - Does not change server state
+                Example:
+```js
+                async function getUsers() {
+                        const res = await fetch("https://jsonplaceholder.typicode.com/users");
+                        const data = await res.json();
+                        console.log(data);
+                }
+                getUsers();
+```
+
+        2. POST — Create data
+                - Creates a new resource
+                - Server generates ID
+                Example :
+```js
+                async function createUser() {
+                        const user = {
+                        name: "Arun",
+                        email: "arun@email.com",
+                        };
+
+                        const res = await fetch("https://jsonplaceholder.typicode.com/users", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(user),
+                        });
+
+                        const data = await res.json();
+                        console.log(data);
+                }
+                createUser();
+```
+        3. PUT — Replace data
+                - Replaces entire resource
+                - Client knows resource ID
+                Example:
+```js
+                async function replaceUser() {
+                        const updatedUser = {
+                                id: 1,
+                                name: "Arun Updated",
+                                email: "updated@email.com",
+                        };
+                        const res = await fetch("https://jsonplaceholder.typicode.com/users/1", {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(updatedUser),
+                        });
+
+                        const data = await res.json();
+                        console.log(data);
+                }
+                replaceUser();
+                // Important --> Missing fields will be removed.
+```
+        4. PATCH — Partial update
+                - Updates only specified fields
+                - Safer than PUT for updates
+                Example:
+```js
+                async function updateUserName() {
+                        const res = await fetch("https://jsonplaceholder.typicode.com/users/1", {
+                                method: "PATCH",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                name: "Patched Name",
+                                }),
+                        });
+                        const data = await res.json();
+                        console.log(data);
+                }
+                updateUserName();
+```
+        GET    → fetch data
+        POST   → create data
+        PUT    → replace data
+        PATCH  → update data
+
 # Promise APIs :-
         1. Promise.all() -> 
                 Runs multiple promises in parallel and waits for ALL to succeed.
