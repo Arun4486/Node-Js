@@ -137,5 +137,70 @@
         5. Cross-context communication should go through the service worker.
         6. Message describes WHAT, not HOW.
 
+# Content Script UI:-
+    A UI rendered inside a webpage, but owned by the extension.
+    Plasmo:
+        - Creates a Shadow DOM
+        - Mounts React inside it
+        Webpage DOM:
+            ├─ Website elements
+            ├─ <plasmo-shadow-root>
+                └─ React UI
+    Action	            How
+    Modify website UI	DOM manipulation
+    Show extension UI	Render in Shadow DOM
+    Plasmo keeps these separate for safety.
 
-
+    Shadow DOM:
+        is a private DOM tree attached to an element, isolated from the page’s DOM and CSS.
+        - DOM inside DOM, with walls around it
+        Why Shadow DOM Exists:
+            - The normal DOM has problems:
+                - CSS leaks everywhere
+                - Class name collisions
+                - JS selectors affect unintended elements
+        Example:
+        button { color: red }
+        This affects every button on the page — including your extension UI 😱
+        Shadow DOM solves this.
+        Document DOM (Page)
+        ├─ <header>
+        ├─ <main>
+        ├─ <footer>
+        └─ <extension-root>
+            └─ #shadow-root (closed)
+                ├─ <button>
+                ├─ <div>
+                └─ React UI
+        Your extension UI lives inside the shadow root.
+        Key Properties of Shadow DOM:
+            1.CSS Isolation
+            2.DOM Encapsulation
+                Selectors like: document.querySelector("button")
+                - Cannot see inside shadow DOM
+                This prevents:
+                    - Accidental manipulation
+                    - Website scripts interfering with extension UI
+            3.Event Retargeting
+                Events behave as if they come from the host element, not internal nodes.
+                Why?
+                - Security
+                - Encapsulation
+            Open vs Closed Shadow DOM
+            A. Open Shadow DOM:
+                - element.attachShadow({ mode: "open" })
+                - Accessible via element.shadowRoot
+                - Debuggable
+            B. Closed Shadow DOM
+                - element.attachShadow({ mode: "closed" })
+                - shadowRoot is inaccessible
+                - Strong isolation
+        Plasmo uses CLOSED shadow DOM by default
+        Shadow DOM vs iframe (Important Comparison)
+        Shadow DOM	        iframe
+        Lightweight	        Heavy
+        Same DOM tree	    Separate document
+        Same JS context	    Different JS context
+        Faster	            Slower
+        Preferred for UI	Rare in extensions
+    It’s about DOM + CSS, not JS context.
