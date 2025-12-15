@@ -75,6 +75,7 @@
     
     Comparison Summary:
     Without Plasmo	            With Plasmo
+    --------------              -----------
     Write JSON manually	        File-based intent
     Manage bundles	            Automatic
     Update manifest on rename	Auto
@@ -87,6 +88,7 @@
 
 # Extension Entry Points (Very Important):-
     File / Folder	        Purpose
+    -------------           -------
     popup.tsx / popup.jsx	UI when you click extension icon
     background.ts	        Service worker (runs in background)
     content.ts	            Runs inside web pages
@@ -144,6 +146,7 @@
         - Its own CSS bundle
         - Its own React root
     Term	            Meaning
+    ----                -------
     Entry point      ->	File that becomes a manifest feature
     Content script   ->	Script injected into websites
     Isolated world   ->	Content script JS sandbox
@@ -178,6 +181,7 @@
         - Prevent tracking
     Important Terms
     Term	        Meaning
+    ----            -------
     Event-driven	Runs only on events
     Ephemeral	    Memory is not persistent
     Cold start	    Worker starts from scratch
@@ -208,6 +212,7 @@
         - Popup listens
     Key Terms
     Term	    Meaning
+    ----        -------
     Message	    Serialized data
     Channel	    Communication path
     Listener	Function waiting for events
@@ -232,6 +237,7 @@
             ├─ <plasmo-shadow-root>
                 └─ React UI
     Action	            How
+    ------              ---
     Modify website UI	DOM manipulation
     Show extension UI	Render in Shadow DOM
     Plasmo keeps these separate for safety.
@@ -283,6 +289,7 @@
         Plasmo uses CLOSED shadow DOM by default
         Shadow DOM vs iframe (Important Comparison)
         Shadow DOM	        iframe
+        ----------          ------
         Lightweight	        Heavy
         Same DOM tree	    Separate document
         Same JS context	    Different JS context
@@ -315,12 +322,14 @@
         Accessing page JS variables
     Lifecycle Terms:
         Term	        Meaning
+        ----            -------
         onInstalled	    Extension installed
         onUpdated	    Extension updated
         onStartup	    Browser start
         onMessage	    Message received
     Build & Runtime Terms:
         Term	        Meaning
+        ----            -------
         Bundle	        Compiled JS output
         Entry point	    popup/content/background
         HMR	            Live reload
