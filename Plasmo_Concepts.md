@@ -204,3 +204,27 @@
         Faster	            Slower
         Preferred for UI	Rare in extensions
     It’s about DOM + CSS, not JS context.
+
+# Worlds (Execution Contexts):-
+    1. Main World:
+        The actual website’s JS environment.
+        - Website variables
+        - Website JS 
+        - Page scripts
+        - Content scripts cannot access this directly
+    2. Isolated World:
+        A sandboxed JS environment for extensions.
+        - Separate global scope
+        - Safe from website scripts
+        - Same DOM access
+        - This is where content scripts run.
+    Same DOM
+    ├─ Website JS (Main World)
+    └─ Content Script JS (Isolated World)
+    Why isolation exists:
+        - Security
+        - Prevent website hijacking extensions
+        - Prevent extensions breaking sites
+    Injected Scripts (Advanced Term):
+        Sometimes you intentionally inject code into main world.
+        Accessing page JS variables
