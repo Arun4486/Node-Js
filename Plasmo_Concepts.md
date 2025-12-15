@@ -1,5 +1,90 @@
 # Plasmo:-
     React framework for browser extensions
+
+# What does manifest.json do?
+    manifest.json is the contract between your extension and the browser.
+    It tells the browser:
+        - Who you are
+        - What you want to do
+        - What you’re allowed to access
+        - Which files do what
+    Without it, the browser does nothing.
+
+    manifest.json
+    ├─ identity
+    ├─ permissions
+    ├─ host_permissions
+    ├─ background
+    ├─ content_scripts
+    ├─ action (popup)
+    └─ security rules
+    Why manifest.json is painful (Without Plasmo):
+        - Verbose , Lots of boilerplate.
+        - Error-prone , One typo = extension doesn’t load.
+        - Hard to refactor , Rename a file → update manifest.
+        - Coupled to build output , Hashed filenames break manual configs.
+        - MV3 complexity , Service worker rules are strict.
+    How Plasmo Abstracts manifest.json
+        Plasmo does not remove the manifest.
+        It GENERATES it for you.
+    Core Idea of Plasmo Abstraction
+        - Your file structure becomes your manifest.
+        - Instead of declaring intent in JSON,
+        - you declare intent by creating files.
+    Entry Points by File Name
+        You create:
+        - popup.tsx
+        - content.ts
+        - background.ts
+        Plasmo infers:
+```js
+        {
+            "action": { "default_popup": "popup.html" },
+            "background": { "service_worker": "background.js" },
+            "content_scripts": [...]
+        }
+```
+        You never write this.
+    Automatic Content Script Registration
+    Without Plasmo:
+```js
+    "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+    }]
+```
+    With Plasmo:
+        content.ts exists → registered
+    Plasmo:
+        - Chooses defaults
+        - Injects on matching pages
+        - Handles bundling
+    Bundling & Hashing (Invisible to You)
+    Plasmo:
+        - Builds separate bundles per context
+        - Adds hashes
+        - Updates manifest automatically
+        - You never worry about:
+
+    Environment Targets:
+        Plasmo generates different manifests for:
+            - Chrome
+            - Firefox
+            - Dev / Production
+            All from the same source.
+    
+    Comparison Summary:
+    Without Plasmo	            With Plasmo
+    Write JSON manually	        File-based intent
+    Manage bundles	            Automatic
+    Update manifest on rename	Auto
+    Handle CSP	                Enforced
+    MV3 pitfalls	            Abstracted
+    
+    manifest.json tells the browser WHAT exists.
+    Plasmo lets you describe WHAT exists by writing code, not JSON.
+
+
 # Extension Entry Points (Very Important):-
     File / Folder	        Purpose
     popup.tsx / popup.jsx	UI when you click extension icon
