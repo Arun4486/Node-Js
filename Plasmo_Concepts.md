@@ -228,3 +228,30 @@
     Injected Scripts (Advanced Term):
         Sometimes you intentionally inject code into main world.
         Accessing page JS variables
+    Lifecycle Terms:
+        Term	        Meaning
+        onInstalled	    Extension installed
+        onUpdated	    Extension updated
+        onStartup	    Browser start
+        onMessage	    Message received
+    Build & Runtime Terms:
+        Term	        Meaning
+        Bundle	        Compiled JS output
+        Entry point	    popup/content/background
+        HMR	            Live reload
+        MV3	Manifest    Version 3
+        Shadow DOM	    CSS isolation
+
+        User action
+        ↓
+        Popup / Content
+        ↓
+        Message (event)
+        ↓
+        Service Worker
+        ↓
+        Browser APIs / Storage
+        Everything is:
+        Event-driven
+        Isolated
+        Permission-based
