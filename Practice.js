@@ -335,12 +335,14 @@
 
 //? this for DOM
 
-const btn = document.getElementById("clickMe");
+// const btn = document.getElementById("clickMe");
 // btn.addEventListener("click", function handleClick() {
 //   alert(this); //[object HTMLButtonElement]
 // });
 
-btn.addEventListener("click", () => {
-  alert(this); //[object Window]
-});
+// btn.addEventListener("click", () => {
+// alert(this); //[object Window]
+// });
 
+// console.log(window)
+console.log("practice");

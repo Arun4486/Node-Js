@@ -1,0 +1,21 @@
+{
+  "name": "node-js",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Arun4486/Node-Js#readme",
+  "bugs": {
+    "url": "https://github.com/Arun4486/Node-Js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arun4486/Node-Js.git"
+  },
+  "license": "ISC",
+  "author": "arun-katiyar",
+  "type": "module",
+  "main": "Basics.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node basics.js"
+  }
+}
