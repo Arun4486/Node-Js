@@ -67,3 +67,53 @@ app.patch("/users/:id", updatePartialUser);
 
 app.delete("/users/:id", deleteUser);
 ```
+
+# Express.js -
+
+    is a lightweight web framework for Node.js that helps you build web servers and APIs more easily.
+    Express provides convenient methods for:
+
+- Routing
+- Handling requests and responses
+- Middleware
+- Parsing request bodies
+- Error handling
+
+# Why express? -
+    without express
+```js
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  if (req.url === '/') {
+    res.end('Home');
+  } else if (req.url === '/users') {
+    res.end('Users');
+  } else {
+    res.statusCode = 404;
+    res.end('Not Found');
+  }
+});
+
+server.listen(3000);
+```
+    with Express
+```js
+const app = express()
+app.get('/', (req, res) => res.send('Welcome to home page'))
+app.get('/Users', (req,res) => res.send('Users page'))
+app.listen(3000)
+```
+    You’ll end up with lots of nested if/else statements.
+    Express is built on top of Node’s http module.
+
+# Versioning - 
+    for any utility/lib/framework/tool the version is written in 3 parts
+    Ex. 4.18.2
+    1. Part three - minor fixes (optional to update)
+    2. Part two - recommended bug fix ()
+    3. Part one - Major release (unstable)
+
+    npm i express@4.18.2 for specific install
+    - '^' (compatible version) symbol is to specify/lock a version, if you have ^4.18.2 and update you version, then only recomended fixes get updated and the major release is locked to 4.
+    - similarly ~4.18.2, means it can update only the minor fixes and other two parts are locked.
